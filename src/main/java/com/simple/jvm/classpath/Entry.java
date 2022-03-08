@@ -16,6 +16,7 @@ public interface Entry {
     /**
      * 寻找并加载class文件
      * @param className class文件的相对路径，路径之间用斜线分割，文件名有.class后缀
+     * @return class文件的字节数据
      */
     byte[] readClass(String className) throws IOException;
 
@@ -39,4 +40,5 @@ public interface Entry {
 
         return new DirEntry(path);
     }
+
 }

@@ -9,18 +9,19 @@ import java.util.List;
 
 public class CompositeEntry implements Entry {
 
-    private final List<Entry> entryList = new ArrayList<>();
+    private final List<Entry> entries = new ArrayList<>();
 
     public CompositeEntry(String pathList) {
+        //  File.pathSeparator: 路径分隔符
         String[] paths = pathList.split(File.pathSeparator);
         for (String path : paths) {
-            entryList.add(Entry.create(path));
+            entries.add(Entry.create(path));
         }
     }
 
     @Override
     public byte[] readClass(String className) throws IOException {
-        for (Entry entry : entryList) {
+        for (Entry entry : entries) {
             try {
                 return entry.readClass(className);
             } catch (Exception ignored) {
@@ -32,9 +33,9 @@ public class CompositeEntry implements Entry {
 
     @Override
     public String toString() {
-        String[] strs = new String[entryList.size()];
-        for (int i = 0; i < entryList.size(); i++) {
-            strs[i] = entryList.get(i).toString();
+        String[] strs = new String[entries.size()];
+        for (int i = 0; i < entries.size(); i++) {
+            strs[i] = entries.get(i).toString();
         }
         return String.join(File.pathSeparator, strs);
     }

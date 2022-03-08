@@ -16,7 +16,7 @@ public class DirEntry implements Entry {
 
     public DirEntry(String path) {
         //  将path转换成绝对路径
-        this.absolutePath = Paths.get(path).toAbsolutePath();
+        absolutePath = Paths.get(path).toAbsolutePath();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class DirEntry implements Entry {
 
     @Override
     public String toString() {
-        return this.absolutePath.toString();
+        return absolutePath.toString();
     }
 
 }

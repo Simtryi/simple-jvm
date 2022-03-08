@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * 类路径
+ * 搜索class文件
  */
 public class Classpath {
 

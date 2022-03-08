@@ -6,7 +6,7 @@ import com.beust.jcommander.Parameter;
 import java.util.List;
 
 /**
- * Java 命令行
+ * Java命令行
  */
 public class Cmd {
 
@@ -33,7 +33,6 @@ public class Cmd {
     static Cmd parse(String[] args) {
         Cmd cmd = new Cmd();
         JCommander jcommander = JCommander.newBuilder().addObject(cmd).build();
-
         jcommander.parse(args);
         cmd.ok = true;
         return cmd;

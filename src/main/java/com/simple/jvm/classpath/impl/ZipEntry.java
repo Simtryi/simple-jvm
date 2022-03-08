@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.nio.file.*;
 
 /**
- * zip/jar形式的类路径
+ * ZIP/JAR形式的类路径
  */
 public class ZipEntry implements Entry {
 
     private Path absolutePath;
 
     public ZipEntry(String path) {
-        this.absolutePath = Paths.get(path).toAbsolutePath();
+        absolutePath = Paths.get(path).toAbsolutePath();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ZipEntry implements Entry {
 
     @Override
     public String toString() {
-        return this.absolutePath.toString();
+        return absolutePath.toString();
     }
 
 }
