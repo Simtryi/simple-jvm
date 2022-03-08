@@ -1,7 +1,7 @@
 # simple-jvm
 
 ## 1 Java命令
--Xbootclasspath：修改启动类路径。
+-Xbootclasspath：修改启动类路径。  
 -classpath/-cp：指定用户类路径。
 
 ## 2 搜索class文件
@@ -117,4 +117,6 @@ LineNumberTable属性表存放方法的行号信息，LocalVariableTable属性�
 在使用javac编译器编译Java程序时，默认会在class文件中生成这些信息。可以使用javac提供的-g：none选项来关闭这些信息的生成。
 
 ## 参考文献
+- [用Java实现JVM](https://bugstack.cn/md/java/develop-jvm/2019-05-01-%E7%94%A8Java%E5%AE%9E%E7%8E%B0JVM%E7%AC%AC%E4%B8%80%E7%AB%A0%E3%80%8A%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E3%80%8B.html)  
+- 《自己动手写Java虚拟机》  
 - [jcommander](https://jcommander.org/#_overview)
