@@ -141,6 +141,77 @@ Java虚拟机栈会为每个即将运行的Java方法创建一块叫做“栈帧
 3. 操作数栈  
 操作数栈的大小是编译器已经确定的。
 
+# 5 指令集和解释器
+## 5.1 字节码
+每一个类或者接口会被Java编译器编译成一个class文件，类或接口的方法信息存放在class文件的method_info结构中。  
+如果方法不是抽象的，也不是本地方法，方法的Java代码就会被编译器编译成字节码(即使方法是空的，编译器也会生成一条return语句)，存放在method_info结构的Code属性中。  
+字节码中存放编码后的Java虚拟机指令，每条指令都已一个单字节的操作码(opcode)开头
+
+操作数栈和局部变量表只存放数据的值，并不记录数据类型。操作码的助记符反映操作数据的类型：
++ **a**：reference，例如：aload、astore、areturn。
++ **b**：byte/boolean，例如：bipush、baload。
++ **c**：char，例如：caload、castore。
++ **d**：double，例如：dload、dstore、dadd。
++ **f**：float，例如：fload、fstore、fadd。
++ **i**：int，例如：iload、istore、iadd。
++ **l**：long，例如：load、lstore、ladd。
++ **s**：short，例如：sipush、sastore。
+
+## 5.2 指令
+1. 常量指令  
+常量指令把常量推入操作数栈顶，常量可以来自三个地方：隐含在操作码里、操作数和运行时常量池。常量指令共有21条，
+
+2. 加载指令  
+加载指令从局部变量表获取变量，然后推入操作数栈顶。  
+加载指令共33条，按照所操作变量的类型可以分为6类：
++ aload系列指令：操作引用类型变量。
++ dload系列指令：操作double类型变量。
++ fload系列指令：操作float类型变量。
++ iload系列指令：操作int类型变量。
++ lload系列指令：操作long类型变量。
++ xaload指令：操作数组。
+
+3. 存储指令
+存储指令把变量从操作数栈顶弹出，然后存入局部变量表。
+
+4. 栈指令  
+栈指令直接对操作数栈进行操作，共9条：pop和pop2指令将栈顶变量弹出，dup系列指令复制栈顶变量，swap指令交换栈顶的两个变量。   
+和其他类型的指令不同，栈指令并不关心变量类型。
+
+5. 数学指令   
+数学指令大致对应Java语言中的加、减、乘、除等数学运算符。数学指令包括算术指令、位移指令和布尔运算指令等。  
+算术指令可以分为加法(add)指令、减法(sub)指令、乘法(mul)指令、除法(div)指令、求余(rem)指令和取反(neg)指令。  
+位移指令可以分为左移和右移两种，右移指令又可以分为算术右移(有符号右移)和逻辑右移(无符号右移)两种。
+布尔运算指令只能操作int和long变量，分为按位与(and)、按位或(or)、按位异或(xor)3种。
+
+6. 类型转换指令  
+类型转换指令大致对应Java语言中的基本类型强制转换操作。  
+按照被转换变量的类型，类型转换指令可以分为4种： 
++ i2x系列：指令把int变量强制转换成其他类型。
++ 12x系列：指令把long变量强制转换成其他类型。
++ f2x系列：指令把float变量强制转换成其他类型。
++ d2x系列：指令把double变量强制转换成其他类型。
+
+7. 比较指令  
+比较指令可以分为两类：一类将比较结果推入操作数栈顶，一类根据比较结果跳转。  
+比较指令是编译器实现if-else、for、while等语句的基石，共有19条。
+
+8. 控制指令  
+控制指令共有11条。
+
+9. 扩展指令  
+扩展指令共有6条。
+
+## 5.3 解释器
+Java虚拟机解释器的大致逻辑如下：
+```
+do {
+    atomically calculate pc and fetch opcode at pc;
+    if (operands) fetch operands;
+    execute the action for the opcode;
+} while (there is more to do);
+```
+
 ## 参考文献
 - [用Java实现JVM](https://bugstack.cn/md/java/develop-jvm/2019-05-01-%E7%94%A8Java%E5%AE%9E%E7%8E%B0JVM%E7%AC%AC%E4%B8%80%E7%AB%A0%E3%80%8A%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E3%80%8B.html)  
 - 《自己动手写Java虚拟机》  

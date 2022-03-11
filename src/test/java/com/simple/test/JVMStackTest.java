@@ -3,11 +3,12 @@ package com.simple.test;
 import com.simple.jvm.rtda.Frame;
 import com.simple.jvm.rtda.LocalVars;
 import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.Thread;
 
 public class JVMStackTest {
 
     public static void main(String[] args) {
-        Frame frame = new Frame(100, 100);
+        Frame frame = new Frame(new Thread(),100, 100);
         testLocalVars(frame.getLocalVars());
         testOperandStack(frame.getOperandStack());
     }

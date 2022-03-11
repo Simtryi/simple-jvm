@@ -60,4 +60,8 @@ public class LocalVars {
         return slots[idx].ref;
     }
 
+    public Slot[] getSlots() {
+        return slots;
+    }
+
 }

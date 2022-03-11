@@ -5,7 +5,7 @@ package com.simple.jvm.rtda;
  */
 public class Slot {
 
-    int num;        //  整数
-    Object ref;     //  引用
+    public int num;        //  整数
+    public Object ref;     //  引用
 
 }

@@ -4,10 +4,8 @@ import com.simple.jvm.classfile.ClassFile;
 import com.simple.jvm.classfile.MemberInfo;
 import com.simple.jvm.classpath.Classpath;
 
-import java.util.Arrays;
-
 /**
- * JVM 的简单实现
+ * JVM的简单实现
  */
 public class SimpleJVM {
 
@@ -34,8 +32,12 @@ public class SimpleJVM {
         //  获取className
         String className = cmd.getMainClass().replace(".", "/");
         ClassFile classFile = loadClass(className, classpath);
-        assert classFile != null;
-        printClassInfo(classFile);
+        MemberInfo mainMethod = getMainMethod(classFile);
+        if (null == mainMethod) {
+            System.out.println("Main method not found in class " + cmd.classpath);
+            return;
+        }
+        new Interpreter(mainMethod);
     }
 
     /**
@@ -51,22 +53,15 @@ public class SimpleJVM {
         }
     }
 
-    private static void printClassInfo(ClassFile classFile) {
-        System.out.printf("version: %d.%d\n", classFile.getMajorVersion(), classFile.getMinorVersion());
-        System.out.printf("constant pool count: %d\n", classFile.getConstantPool().getSize());
-        System.out.printf("access flags: 0x%x\n", classFile.getAccessFlags());
-        System.out.printf("this class: %s\n", classFile.getClassName());
-        System.out.printf("super class: %s\n", classFile.getSupperClassName());
-        System.out.printf("interfaces: %s\n", Arrays.toString(classFile.getInterfaceNames()));
-        System.out.printf("fields count: %d\n", classFile.getFields().length);
-        for (MemberInfo memberInfo : classFile.getFields()) {
-            System.out.printf("%s \t\t %s\n", memberInfo.getName(), memberInfo.getDescriptor());
+    private static MemberInfo getMainMethod(ClassFile cf) {
+        if (null == cf) return null;
+        MemberInfo[] methods = cf.getMethods();
+        for (MemberInfo m : methods) {
+            if ("main".equals(m.getName()) && "([Ljava/lang/String;)V".equals(m.getDescriptor())) {
+                return m;
+            }
         }
-
-        System.out.printf("methods count: %d\n", classFile.getMethods().length);
-        for (MemberInfo memberInfo : classFile.getMethods()) {
-            System.out.printf("%s \t\t %s\n", memberInfo.getName(), memberInfo.getDescriptor());
-        }
+        return null;
     }
 
 }

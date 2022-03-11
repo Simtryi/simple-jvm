@@ -1,6 +1,7 @@
 package com.simple.jvm.classfile;
 
 import com.simple.jvm.classfile.attributeinfo.AttributeInfo;
+import com.simple.jvm.classfile.attributeinfo.impl.CodeAttribute;
 
 /**
  * 字段和方法信息
@@ -49,6 +50,18 @@ public class MemberInfo {
      */
     public String getDescriptor() {
         return constantPool.getUTF8(descriptorIdx);
+    }
+
+    /**
+     * 从属性表查找Code属性
+     */
+    public CodeAttribute getCodeAttribute() {
+        for (AttributeInfo attrInfo : attributes) {
+            if (attrInfo instanceof CodeAttribute) {
+                return (CodeAttribute) attrInfo;
+            }
+        }
+        return null;
     }
 
 }
