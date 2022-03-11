@@ -61,6 +61,10 @@ public class ConstantPool {
         return utf8Info == null ? "" : utf8Info.getStr();
     }
 
+    public ConstantInfo[] getConstantInfos() {
+        return constantInfos;
+    }
+
     public int getSize() {
         return size;
     }

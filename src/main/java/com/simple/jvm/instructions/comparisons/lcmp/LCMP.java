@@ -1,8 +1,8 @@
 package com.simple.jvm.instructions.comparisons.lcmp;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 /**
  * 比较long变量

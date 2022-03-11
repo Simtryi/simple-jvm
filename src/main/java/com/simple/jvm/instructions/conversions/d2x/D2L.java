@@ -1,8 +1,8 @@
 package com.simple.jvm.instructions.conversions.d2x;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 /**
  * double类型转换为long类型

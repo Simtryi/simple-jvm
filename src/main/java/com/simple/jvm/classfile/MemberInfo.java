@@ -2,6 +2,7 @@ package com.simple.jvm.classfile;
 
 import com.simple.jvm.classfile.attributeinfo.AttributeInfo;
 import com.simple.jvm.classfile.attributeinfo.impl.CodeAttribute;
+import com.simple.jvm.classfile.attributeinfo.impl.ConstantValueAttribute;
 
 /**
  * 字段和方法信息
@@ -59,6 +60,15 @@ public class MemberInfo {
         for (AttributeInfo attrInfo : attributes) {
             if (attrInfo instanceof CodeAttribute) {
                 return (CodeAttribute) attrInfo;
+            }
+        }
+        return null;
+    }
+
+    public ConstantValueAttribute ConstantValueAttribute() {
+        for (AttributeInfo attrInfo : attributes) {
+            if (attrInfo instanceof ConstantValueAttribute) {
+                return (ConstantValueAttribute) attrInfo;
             }
         }
         return null;

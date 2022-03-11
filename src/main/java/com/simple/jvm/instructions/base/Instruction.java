@@ -1,6 +1,6 @@
 package com.simple.jvm.instructions.base;
 
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * 指令接口

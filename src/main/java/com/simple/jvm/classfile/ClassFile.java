@@ -12,7 +12,7 @@ public class ClassFile {
     private ConstantPool constantPool;      //  常量池
     private int accessFlags;                //  类访问标志
     private int thisClassIdx;               //  类索引
-    private int supperClassIdx;             //  超类索引
+    private int superClassIdx;              //  超类索引
     private int[] interfaces;               //  接口索引表
     private MemberInfo[] fields;            //  字段表
     private MemberInfo[] methods;           //  方法表
@@ -25,7 +25,7 @@ public class ClassFile {
         constantPool = readConstantPool(reader);
         accessFlags = reader.readU2();
         thisClassIdx = reader.readU2();
-        supperClassIdx = reader.readU2();
+        superClassIdx = reader.readU2();
         interfaces = reader.readU2s();
         fields = MemberInfo.readMembers(reader, constantPool);
         methods = MemberInfo.readMembers(reader, constantPool);
@@ -105,12 +105,12 @@ public class ClassFile {
     /**
      * 从常量池查找超类名
      */
-    public String getSupperClassName() {
+    public String getSuperClassName() {
         //  除java.lang.Object之外，其他类都有超类，所以supperClass只在Object.class中是0，在其他class文件中必须是有效的常量池索引
-        if (supperClassIdx <= 0) {
+        if (superClassIdx <= 0) {
             return "";
         }
-        return this.constantPool.getClassName(supperClassIdx);
+        return this.constantPool.getClassName(superClassIdx);
     }
 
     /**

@@ -2,10 +2,10 @@ package com.simple.jvm.instructions.base.impl;
 
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
- * 访问运行时常量池，常量池索引由两字节操作数给出
+ * 访问运行时常量池，常量池索引由2字节操作数给出
  */
 public class Index16Instruction implements Instruction {
 

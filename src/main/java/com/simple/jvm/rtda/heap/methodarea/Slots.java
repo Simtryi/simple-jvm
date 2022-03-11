@@ -1,16 +1,15 @@
-package com.simple.jvm.rtda;
+package com.simple.jvm.rtda.heap.methodarea;
 
-/**
- * 局部变量表
- */
-public class LocalVars {
+import com.simple.jvm.rtda.jvmstack.Slot;
+
+public class Slots {
 
     private Slot[] slots;
 
-    public LocalVars(int maxLocals) {
-        if (maxLocals > 0) {
-            slots = new Slot[maxLocals];
-            for (int i = 0; i < maxLocals; i++) {
+    public Slots(int slotCount) {
+        if (slotCount > 0) {
+            slots = new Slot[slotCount];
+            for (int i = 0; i < slotCount; i++) {
                 slots[i] = new Slot();
             }
         }
@@ -25,12 +24,11 @@ public class LocalVars {
     }
 
     public void setFloat(int idx, float val) {
-        slots[idx].num = (Float.valueOf(val)).intValue();
+        slots[idx].num = (int) val;
     }
 
-    public Float getFloat(int idx) {
-        int num = slots[idx].num;
-        return (float) num;
+    public float getFloat(int idx) {
+        return slots[idx].num;
     }
 
     public void setLong(int idx, long val) {
@@ -38,10 +36,10 @@ public class LocalVars {
         slots[idx + 1].num = (int) (val >> 32);
     }
 
-    public Long getLong(int idx) {
+    public long getLong(int idx) {
         int low = slots[idx].num;
         int high = slots[idx + 1].num;
-        return ((long) high << 32) | (long) low;
+        return (long) high << 32 | (long) low;
     }
 
     public void setDouble(int idx, double val) {
@@ -49,19 +47,15 @@ public class LocalVars {
     }
 
     public Double getDouble(int idx) {
-        return Double.valueOf(getLong(idx));
+        return (double) getLong(idx);
     }
 
     public void setRef(int idx, Object ref) {
         slots[idx].ref = ref;
     }
 
-    public Object getRef(int idx) {
+    public Object getRef(int idx){
         return slots[idx].ref;
-    }
-
-    public Slot[] getSlots() {
-        return slots;
     }
 
 }

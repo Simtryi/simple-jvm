@@ -1,4 +1,6 @@
-package com.simple.jvm.rtda;
+package com.simple.jvm.rtda.jvmstack;
+
+import com.simple.jvm.rtda.heap.methodarea.Object;
 
 /**
  * 数据槽

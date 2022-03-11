@@ -13,7 +13,7 @@ import com.simple.jvm.instructions.stores.dstore.DSTORE;
 import com.simple.jvm.instructions.stores.fstore.FSTORE;
 import com.simple.jvm.instructions.stores.istore.ISTORE;
 import com.simple.jvm.instructions.stores.lstore.LSTORE;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * 加载类指令、存储类指令、ret指令和iinc指令需要按索引访问局部变量表，

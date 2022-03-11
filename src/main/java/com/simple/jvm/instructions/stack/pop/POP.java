@@ -2,8 +2,8 @@ package com.simple.jvm.instructions.stack.pop;
 
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 /**
  * 将栈顶变量弹出，只能用于弹出int、float等占一个操作数栈位置的变量

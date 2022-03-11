@@ -1,9 +1,9 @@
 package com.simple.jvm.instructions.stack.swap;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
-import com.simple.jvm.rtda.Slot;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Slot;
 
 /**
  * 交换栈顶的两个变量

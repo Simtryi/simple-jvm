@@ -4,6 +4,8 @@ import com.simple.jvm.classfile.ClassReader;
 import com.simple.jvm.classfile.ConstantPool;
 import com.simple.jvm.classfile.constantinfo.ConstantInfo;
 
+import java.util.Map;
+
 public class ConstantInterfaceMethodrefInfo implements ConstantInfo {
 
     private ConstantPool constantPool;  //  常量池
@@ -23,6 +25,14 @@ public class ConstantInterfaceMethodrefInfo implements ConstantInfo {
     @Override
     public int getTag() {
         return CONSTANT_INTERFACEMETHODREF;
+    }
+
+    public String getClassName() {
+        return constantPool.getClassName(classIdx);
+    }
+
+    public Map<String, String> getNameAndDescriptor() {
+        return constantPool.getNameAndType(nameAndTypeIdx);
     }
 
 }

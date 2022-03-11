@@ -1,8 +1,8 @@
 package com.simple.jvm.instructions.constants.consts;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 /**
  * 将int型2推入操作数栈顶

@@ -2,7 +2,7 @@ package com.simple.jvm.instructions.control;
 
 import com.simple.jvm.instructions.base.Instruction;
 import com.simple.jvm.instructions.base.impl.BranchInstruction;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * 无条件跳转

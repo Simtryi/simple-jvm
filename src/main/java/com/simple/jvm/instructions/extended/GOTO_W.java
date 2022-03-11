@@ -2,7 +2,7 @@ package com.simple.jvm.instructions.extended;
 
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * 无条件跳转，索引是4字节

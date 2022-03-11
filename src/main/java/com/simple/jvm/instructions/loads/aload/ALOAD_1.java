@@ -1,9 +1,10 @@
 package com.simple.jvm.instructions.loads.aload;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.LocalVars;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.heap.methodarea.Object;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.LocalVars;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 public class ALOAD_1 extends NoOperandsInstruction {
 

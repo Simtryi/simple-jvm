@@ -1,9 +1,9 @@
 package com.simple.jvm.instructions.stores.dstore;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.LocalVars;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.LocalVars;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 public class DSTORE_1 extends NoOperandsInstruction {
 

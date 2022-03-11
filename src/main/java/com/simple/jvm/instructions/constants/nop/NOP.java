@@ -1,7 +1,7 @@
 package com.simple.jvm.instructions.constants.nop;
 
 import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * nop指令什么也不做

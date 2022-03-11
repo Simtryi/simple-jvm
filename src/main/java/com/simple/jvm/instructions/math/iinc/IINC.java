@@ -2,8 +2,8 @@ package com.simple.jvm.instructions.math.iinc;
 
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.LocalVars;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.LocalVars;
 
 /**
  * 给局部变量表中的int变量增加常量值，局部变量表的索引和常量值都由指令的操作数提供

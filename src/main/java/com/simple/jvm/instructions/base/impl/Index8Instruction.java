@@ -2,7 +2,7 @@ package com.simple.jvm.instructions.base.impl;
 
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
-import com.simple.jvm.rtda.Frame;
+import com.simple.jvm.rtda.jvmstack.Frame;
 
 /**
  * 根据索引存取局部变量表，索引由单字节操作数给出

@@ -1,5 +1,9 @@
 package com.simple.jvm.rtda;
 
+import com.simple.jvm.rtda.heap.methodarea.Method;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.JVMStack;
+
 /**
  * 线程
  */
@@ -32,8 +36,12 @@ public class Thread {
         return stack.top();
     }
 
-    public Frame newFrame(int maxLocals, int maxStack) {
-        return new Frame(this, maxLocals, maxStack);
+    public Frame topFrame(){
+        return stack.top();
+    }
+
+    public Frame newFrame(Method method) {
+        return new Frame(this, method);
     }
 
 }

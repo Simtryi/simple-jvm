@@ -2,8 +2,8 @@ package com.simple.jvm.instructions.comparisons.if_acmp;
 
 import com.simple.jvm.instructions.base.Instruction;
 import com.simple.jvm.instructions.base.impl.BranchInstruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 public class IF_ACMPNE extends BranchInstruction {
 

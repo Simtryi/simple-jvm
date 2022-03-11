@@ -3,8 +3,8 @@ package com.simple.jvm.instructions.constants.ipush;
 
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
-import com.simple.jvm.rtda.Frame;
-import com.simple.jvm.rtda.OperandStack;
+import com.simple.jvm.rtda.jvmstack.Frame;
+import com.simple.jvm.rtda.jvmstack.OperandStack;
 
 /**
  * 从操作数中获取一个byte型整数，扩展成int型，然后推入栈顶
