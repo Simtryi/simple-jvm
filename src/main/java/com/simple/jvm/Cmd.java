@@ -16,6 +16,9 @@ public class Cmd {
     @Parameter(names = "-version", description = "print version and exit", order = 2)
     boolean versionFlag = false;
 
+    @Parameter(names = "verbose", description = "enable verbose output", order = 5)
+    boolean verboseClassFlag = false;
+
     @Parameter(names = {"-cp", "-classpath"}, description = "classpath", order = 1)
     String classpath;
 

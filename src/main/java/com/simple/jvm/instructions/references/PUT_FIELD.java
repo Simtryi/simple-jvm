@@ -27,10 +27,14 @@ public class PUT_FIELD extends Index16Instruction {
 
         if (field.isStatic()) {
             //  解析后的字段必须是实例字段，否则抛出IncompatibleClassChangeError
+            throw new IncompatibleClassChangeError();
         }
 
         if (field.isFinal()) {
             //  如果是final字段，则是能在构造函数中初始化，否则抛出IllegalAccessError
+            if (currentClazz != field.getClazz() || !"<init>".equals(currentMethod.getName())){
+                throw new IllegalAccessError();
+            }
         }
 
         String descriptor = field.getDescriptor();

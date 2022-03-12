@@ -42,6 +42,10 @@ public class Frame {
         return nextPC;
     }
 
+    public void revertNextPC(){
+        nextPC = thread.getPC();
+    }
+
     public Method getMethod(){
         return method;
     }

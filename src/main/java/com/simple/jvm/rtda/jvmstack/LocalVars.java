@@ -66,4 +66,8 @@ public class LocalVars {
         return slots;
     }
 
+    public void setSlot(int idx, Slot slot) {
+        slots[idx] = slot;
+    }
+
 }

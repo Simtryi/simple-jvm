@@ -5,6 +5,9 @@ import com.simple.jvm.rtda.Thread;
 import com.simple.jvm.rtda.heap.methodarea.Object;
 import com.simple.jvm.rtda.jvmstack.Frame;
 
+/**
+ * 返回引用类型的值
+ */
 public class ARETURN extends NoOperandsInstruction {
 
     @Override

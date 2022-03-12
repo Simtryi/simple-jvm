@@ -1,5 +1,6 @@
 package com.simple.jvm.instructions.references;
 
+import com.simple.jvm.instructions.base.ClassInitLogic;
 import com.simple.jvm.instructions.base.impl.Index16Instruction;
 import com.simple.jvm.rtda.heap.constantpool.FieldRef;
 import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
@@ -30,9 +31,25 @@ public class PUT_STATIC extends Index16Instruction {
         //  解析符号引用可以知道要给类的哪个静态变量赋值
         Field field = fieldRef.resolvedField();
         Class clazz = field.getClazz();
+
+
+        if (!clazz.getInitStarted()) {
+            frame.revertNextPC();
+            ClassInitLogic.initClass(frame.getThread(), clazz);
+            return;
+        }
+        if (!field.isStatic()) {
+            throw new IncompatibleClassChangeError();
+        }
+        if (field.isFinal()) {
+            if (currentClazz != clazz || !"<clinit>".equals(currentMethod.getName())) {
+                throw new IllegalAccessError();
+            }
+        }
+
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        Slots slots = clazz.staticVars();
+        Slots slots = clazz.getStaticVars();
         OperandStack stack = frame.getOperandStack();
         switch (descriptor.substring(0, 1)) {
             case "Z":

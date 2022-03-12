@@ -1,5 +1,6 @@
 package com.simple.jvm.instructions.references;
 
+import com.simple.jvm.instructions.base.ClassInitLogic;
 import com.simple.jvm.instructions.base.impl.Index16Instruction;
 import com.simple.jvm.rtda.heap.constantpool.FieldRef;
 import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
@@ -19,13 +20,20 @@ public class GET_STATIC extends Index16Instruction {
         RunTimeConstantPool runTimeConstantPool = frame.getMethod().getClazz().getConstantPool();
         FieldRef ref = (FieldRef) runTimeConstantPool.getConstants(this.idx);
         Field field = ref.resolvedField();
-        if (!field.isStatic()){
+        Class clazz = field.getClazz();
+
+        if (!clazz.getInitStarted()) {
+            frame.revertNextPC();
+            ClassInitLogic.initClass(frame.getThread(), clazz);
+            return;
+        }
+        if (!field.isStatic()) {
             throw new IncompatibleClassChangeError();
         }
-        Class clazz = field.getClazz();
+
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        Slots slots = clazz.staticVars();
+        Slots slots = clazz.getStaticVars();
         OperandStack stack = frame.getOperandStack();
         switch (descriptor.substring(0, 1)) {
             case "Z":

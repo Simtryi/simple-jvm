@@ -458,10 +458,10 @@ public class Factory {
                 return new INVOKE_VIRTUAL();
             case (byte) 0xb7:
                 return new INVOKE_SPECIAL();
-            // case 0xb8:
-            // 	return &INVOKE_STATIC{}
-            // case 0xb9:
-            // 	return &INVOKE_INTERFACE{}
+             case (byte) 0xb8:
+             	return new INVOKE_STATIC();
+             case (byte) 0xb9:
+             	return new INVOKE_INTERFACE();
             // case 0xba:
             // 	return &INVOKE_DYNAMIC{}
             case (byte) 0xbb:

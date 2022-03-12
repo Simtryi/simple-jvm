@@ -60,4 +60,8 @@ public class JVMStack {
         return _top;
     }
 
+    public boolean isEmpty(){
+        return _top == null;
+    }
+
 }

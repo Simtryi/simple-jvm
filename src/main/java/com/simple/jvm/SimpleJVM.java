@@ -38,7 +38,7 @@ public class SimpleJVM {
         if (null == mainMethod) {
             throw new RuntimeException("Main method not found in class " + cmd.getMainClass());
         }
-        new Interpreter(mainMethod);
+        new Interpreter(mainMethod, cmd.verboseClassFlag);
     }
 
 }

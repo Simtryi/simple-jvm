@@ -46,6 +46,23 @@ public class ClassMember {
         return 0 != (accessFlags & AccessFlags.ACC_SYNTHETIC);
     }
 
+    /**
+     * 是否有权限访问该方法
+     */
+    public boolean isAccessibleTo(Class d) {
+        if (isPublic()) {
+            return true;
+        }
+        Class c = clazz;
+        if (isProtected()) {
+            return d == c || c.getPackageName().equals(d.getPackageName());
+        }
+        if (!isPrivate()) {
+            return c.getPackageName().equals(d.getPackageName());
+        }
+        return d == c;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,20 +73,6 @@ public class ClassMember {
 
     public Class getClazz() {
         return clazz;
-    }
-
-    public boolean isAccessibleTo(Class d) {
-        if (this.isPublic()) {
-            return true;
-        }
-        Class c = this.clazz;
-        if (this.isProtected()) {
-            return d == c || c.getPackageName().equals(d.getPackageName());
-        }
-        if (!this.isPrivate()) {
-            return c.getPackageName().equals(d.getPackageName());
-        }
-        return d == c;
     }
 
 }

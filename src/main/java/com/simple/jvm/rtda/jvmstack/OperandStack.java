@@ -86,4 +86,11 @@ public class OperandStack {
         return slots;
     }
 
+    /**
+     * 返回距离操作数栈顶n个单元格的引用变量
+     */
+    public Object getRefFromTop(int n) {
+        return slots[size - 1 - n].ref;
+    }
+
 }

@@ -23,6 +23,7 @@ public class Class {
     public int instanceSlotCount;                       //  实例变量占据的空间大小
     public int staticSlotCount;                         //  类变量占据的空间大小
     public Slots staticVars;                            //  静态变量
+    public boolean initStarted;                         //  类是否初始化
 
     public Class(ClassFile classFile) {
         accessFlags = classFile.getAccessFlags();
@@ -33,6 +34,14 @@ public class Class {
         fields = new Field().create(this, classFile.getFields());
         methods = new Method().create(this, classFile.getMethods());
     }
+
+
+
+    public Object newObject() {
+        return new Object(this);
+    }
+
+
 
     public boolean isPublic() {
         return 0 != (accessFlags & AccessFlags.ACC_PUBLIC);
@@ -66,16 +75,74 @@ public class Class {
         return 0 != (this.accessFlags & AccessFlags.ACC_ENUM);
     }
 
+    public boolean isAccessibleTo(Class other) {
+        return this.isPublic() || this.getPackageName().equals(other.getPackageName());
+    }
+
+    public boolean isAssignableFrom(Class other) {
+        if (this == other) return true;
+        if (!other.isInterface()) {
+            return this.isSubClassOf(other);
+        } else {
+            return this.isImplements(other);
+        }
+    }
+
+    public boolean isSubClassOf(Class other) {
+        for (Class c = this.superClass; c != null; c = c.superClass) {
+            if (c == other) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isImplements(Class other) {
+
+        for (Class c = this; c != null; c = c.superClass) {
+            for (Class clazz : c.interfaces) {
+                if (clazz == other || clazz.isSubInterfaceOf(other)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    public boolean isSubInterfaceOf(Class iface) {
+        for (Class superInterface : this.interfaces) {
+            if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     public RunTimeConstantPool getConstantPool() {
         return runTimeConstantPool;
     }
 
-    public Slots staticVars() {
-        return this.staticVars;
+    public String getName() {
+        return name;
     }
 
-    public boolean isAccessibleTo(Class other) {
-        return this.isPublic() || this.getPackageName().equals(other.getPackageName());
+    public Class getSuperClass() {
+        return superClass;
+    }
+
+    public Slots getStaticVars() {
+        return staticVars;
+    }
+
+    public boolean getInitStarted(){
+        return initStarted;
+    }
+
+    public void startInit(){
+        initStarted = true;
     }
 
     public String getPackageName() {
@@ -97,48 +164,8 @@ public class Class {
         return null;
     }
 
-    public Object newObject() {
-        return new Object(this);
-    }
-
-    public boolean isAssignableFrom(Class other) {
-        if (this == other) return true;
-        if (!other.isInterface()) {
-            return this.isSubClassOf(other);
-        } else {
-            return this.isImplements(other);
-        }
-    }
-
-    public boolean isSubClassOf(Class other) {
-        for (Class c = this.superClass; c != null; c = c.superClass) {
-            if (c == other) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isImplements(Class other) {
-
-        for (Class c = this; c != null; c = c.superClass) {
-            for (Class clazz : c.interfaces) {
-                if (clazz == other || clazz.isSubInterfaceOf(other)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-
-    }
-
-    public boolean isSubInterfaceOf(Class iface) {
-        for (Class superInterface : this.interfaces) {
-            if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) {
-                return true;
-            }
-        }
-        return false;
+    public Method getClinitMethod(){
+        return getStaticMethod("<clinit>","()V");
     }
 
 }

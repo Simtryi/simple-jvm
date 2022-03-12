@@ -44,4 +44,8 @@ public class Thread {
         return new Frame(this, method);
     }
 
+    public boolean isStackEmpty(){
+        return stack.isEmpty();
+    }
+
 }

@@ -4,6 +4,9 @@ import com.simple.jvm.instructions.base.impl.NoOperandsInstruction;
 import com.simple.jvm.rtda.Thread;
 import com.simple.jvm.rtda.jvmstack.Frame;
 
+/**
+ * 返回double类型的值
+ */
 public class DRETURN extends NoOperandsInstruction {
 
     @Override
