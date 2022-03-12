@@ -25,6 +25,9 @@ public class Cmd {
     @Parameter(names = "-Xjre", description = "path to jre", order = 4)
     String jre;
 
+    @Parameter(names = "-args", description = "ext in args", order = 6)
+    String args;
+
     @Parameter(description = "main class and args")
     List<String> mainClassAndArgs;
 

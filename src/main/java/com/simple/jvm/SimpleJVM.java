@@ -1,7 +1,5 @@
 package com.simple.jvm;
 
-import com.simple.jvm.classfile.ClassFile;
-import com.simple.jvm.classfile.MemberInfo;
 import com.simple.jvm.classpath.Classpath;
 import com.simple.jvm.rtda.heap.methodarea.Class;
 import com.simple.jvm.rtda.heap.methodarea.Method;
@@ -38,7 +36,7 @@ public class SimpleJVM {
         if (null == mainMethod) {
             throw new RuntimeException("Main method not found in class " + cmd.getMainClass());
         }
-        new Interpreter(mainMethod, cmd.verboseClassFlag);
+        new Interpreter(mainMethod, cmd.verboseClassFlag, cmd.args);
     }
 
 }

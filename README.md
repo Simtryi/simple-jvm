@@ -255,6 +255,31 @@ do {
 + 当初始化一个类时，如果类的超类还没有被初始化，要先初始化类的超类。
 + 执行某些反射操作时。
 
+# 7 数组和字符串
+## 7.1 数组
+数组类和普通的类是不同的，普通的类从class文件中加载，但是数组类由Java虚拟机在运行时生成。
+数组的类名是左方括号（[）+数组元素的类型描述符，数组的类型描述符就是类名本身。 
+例如，int[]的类名是[I，int[][]的类名是[[I，Object[]的类名是[Ljava/lang/Object；，String[][]的类名是[[java/lang/String；，等等。
+
+创建数组的方式和创建普通对象的方式不同，普通对象由new指令创建，然后由构造函数初始化。基本类型数组由newarray指令创建，引用类型数组由anewarray指令创建。
+另外还有一个专门的multianewarray指令用于创建多维数组。
+
+数组和普通对象存放的数据也是不同的，普通对象中存放的是实例变量，通过putfield和getfield指令存取。
+数组对象中存放的则是数组元素，通过<t>aload和<t>astore系列指令按索引存取。
+其中<t>可以是a、b、c、d、f、i、l或者s，分别用于存取引用、byte、char、double、float、int、long或short类型的数组。
+另外，还有一个arraylength指令，用于获取数组长度。
+
+## 7.2 字符串
+在class文件中，字符串是以MUTF8格式保存的。
+在Java虚拟机运行期间，字符串以java.lang.String（后面简称String）对象的形式存在，而在String对象内部，字符串又是以UTF16格式保存的。
+字符串相关功能大部分都是由String（和StringBuilder等）类提供的。
+
+String类有两个实例变量，其中一个是value，类型是字符数组，用于存放UTF16编码后的字符序列。另一个是hash，缓存计字符串的哈希码。
+字符串对象是不可变（immutable）的，一旦构造好之后，就无法再改变其状态（这里指value字段）。
+
+为了节约内存，Java虚拟机内部维护了一个字符串池。String类提供了intern（）实例方法，可以把自己放入字符串池。
+
+
 ## 参考文献
 - [用Java实现JVM](https://bugstack.cn/md/java/develop-jvm/2019-05-01-%E7%94%A8Java%E5%AE%9E%E7%8E%B0JVM%E7%AC%AC%E4%B8%80%E7%AB%A0%E3%80%8A%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E3%80%8B.html)  
 - 《自己动手写Java虚拟机》  

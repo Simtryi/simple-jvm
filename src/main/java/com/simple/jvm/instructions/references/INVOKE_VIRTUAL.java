@@ -7,6 +7,7 @@ import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
 import com.simple.jvm.rtda.heap.methodarea.Class;
 import com.simple.jvm.rtda.heap.methodarea.Method;
 import com.simple.jvm.rtda.heap.methodarea.Object;
+import com.simple.jvm.rtda.heap.methodarea.StringPool;
 import com.simple.jvm.rtda.heap.util.MethodLookup;
 import com.simple.jvm.rtda.jvmstack.Frame;
 import com.simple.jvm.rtda.jvmstack.OperandStack;
@@ -77,6 +78,11 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
                 break;
             case "(D)V":
                 System.out.println(stack.popDouble());
+                break;
+            case "(Ljava/lang/String;)V":
+                Object jStr = stack.popRef();
+                String goStr = StringPool.goString(jStr);
+                System.out.println(goStr);
                 break;
             default:
                 System.out.println(descriptor);

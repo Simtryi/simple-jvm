@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.simple.jvm.instructions.Factory;
 import com.simple.jvm.instructions.base.BytecodeReader;
 import com.simple.jvm.instructions.base.Instruction;
+import com.simple.jvm.rtda.heap.methodarea.Class;
 import com.simple.jvm.rtda.heap.methodarea.Method;
+import com.simple.jvm.rtda.heap.methodarea.Object;
+import com.simple.jvm.rtda.heap.methodarea.StringPool;
 import com.simple.jvm.rtda.jvmstack.Frame;
 import com.simple.jvm.rtda.Thread;
 
@@ -13,14 +16,32 @@ import com.simple.jvm.rtda.Thread;
  */
 public class Interpreter {
 
-    Interpreter(Method method, boolean logInst) {
+    Interpreter(Method method, boolean logInst, String args) {
         //  创建一个Thread实例
         Thread thread = new Thread();
         //  创建一个帧并推入Java虚拟机栈
         Frame frame = thread.newFrame(method);
         thread.pushFrame(frame);
 
+        if (null != args){
+            Object jArgs = createArgsArray(method.getClazz().getLoader(), args.split(" "));
+            frame.getLocalVars().setRef(0, jArgs);
+        }
+
         loop(thread, logInst);
+    }
+
+    /**
+     *  将args参数转换成Java字符串数组
+     */
+    private Object createArgsArray(ClassLoader loader, String[] args) {
+        Class stringClass = loader.loadClass("java/lang/String");
+        Object argsArr = stringClass.getArrayClass().newArray(args.length);
+        Object[] jArgs = argsArr.getRefs();
+        for (int i = 0; i < jArgs.length; i++) {
+            jArgs[i] = StringPool.jString(loader, args[i]);
+        }
+        return argsArr;
     }
 
     /**

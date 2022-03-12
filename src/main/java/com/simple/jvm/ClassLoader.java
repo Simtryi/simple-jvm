@@ -2,10 +2,12 @@ package com.simple.jvm;
 
 import com.simple.jvm.classfile.ClassFile;
 import com.simple.jvm.classpath.Classpath;
+import com.simple.jvm.rtda.heap.constantpool.AccessFlags;
 import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
 import com.simple.jvm.rtda.heap.methodarea.Class;
 import com.simple.jvm.rtda.heap.methodarea.Field;
 import com.simple.jvm.rtda.heap.methodarea.Slots;
+import com.simple.jvm.rtda.heap.methodarea.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,11 @@ public class ClassLoader {
             return clazz;
         }
 
+        //  要加载的类是数组类
+        if (className.getBytes()[0] == '[') {
+            return loadArrayClass(className);
+        }
+
         try {
             return loadNonArrayClass(className);
         } catch (Exception e) {
@@ -42,6 +49,20 @@ public class ClassLoader {
         }
 
         return null;
+    }
+
+    /**
+     * 加载数组类
+     */
+    private Class loadArrayClass(String className) {
+        Class clazz = new Class(AccessFlags.ACC_PUBLIC,
+                className,
+                this,
+                true,
+                this.loadClass("java/lang/Object"),
+                new Class[]{this.loadClass("java/lang/Cloneable"), this.loadClass("java/io/Serializable")});
+        classMap.put(className, clazz);
+        return clazz;
     }
 
     /**
@@ -197,12 +218,18 @@ public class ClassLoader {
                     staticVars.setInt(slotId, (Integer) val);
                 case "J":
                     staticVars.setLong(slotId, (Long) constantPool.getConstants(cpIdx));
+                    break;
                 case "F":
                     staticVars.setFloat(slotId, (Float) constantPool.getConstants(cpIdx));
+                    break;
                 case "D":
                     staticVars.setDouble(slotId, (Double) constantPool.getConstants(cpIdx));
+                    break;
                 case "Ljava/lang/String;":
-                    System.out.println("todo");
+                    String goStr = (String) constantPool.getConstants(cpIdx);
+                    com.simple.jvm.rtda.heap.methodarea.Object jStr = StringPool.jString(clazz.getLoader(), goStr);
+                    staticVars.setRef(slotId, jStr);
+                    break;
             }
         }
     }

@@ -4,6 +4,7 @@ import com.simple.jvm.ClassLoader;
 import com.simple.jvm.classfile.ClassFile;
 import com.simple.jvm.rtda.heap.constantpool.AccessFlags;
 import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
+import com.simple.jvm.rtda.heap.util.ClassNameHelper;
 
 /**
  * 类信息
@@ -25,6 +26,9 @@ public class Class {
     public Slots staticVars;                            //  静态变量
     public boolean initStarted;                         //  类是否初始化
 
+    /**
+     * 普通类构造函数
+     */
     public Class(ClassFile classFile) {
         accessFlags = classFile.getAccessFlags();
         name = classFile.getClassName();
@@ -35,10 +39,52 @@ public class Class {
         methods = new Method().create(this, classFile.getMethods());
     }
 
+    /**
+     * 数组类构造函数
+     */
+    public Class(int accessFlags, String name, ClassLoader loader, boolean initStarted, Class superClass, Class[] interfaces) {
+        this.accessFlags = accessFlags;
+        this.name = name;
+        this.loader = loader;
+        this.initStarted = initStarted;
+        this.superClass = superClass;
+        this.interfaces = interfaces;
+    }
 
-
+    /**
+     * 创建普通对象
+     */
     public Object newObject() {
         return new Object(this);
+    }
+
+    /**
+     * 创建数组对象
+     */
+    public Object newArray(int count) {
+        if (!isArray()) {
+            throw new RuntimeException("Not array class " + name);
+        }
+        switch (getName()) {
+            case "[Z":
+                return new Object(this, new byte[count]);
+            case "[B":
+                return new Object(this, new byte[count]);
+            case "[C":
+                return new Object(this, new char[count]);
+            case "[S":
+                return new Object(this, new short[count]);
+            case "[I":
+                return new Object(this, new int[count]);
+            case "[J":
+                return new Object(this, new long[count]);
+            case "[F":
+                return new Object(this, new float[count]);
+            case "[D":
+                return new Object(this, new double[count]);
+            default:
+                return new Object(this, new Object[count]);
+        }
     }
 
 
@@ -98,7 +144,6 @@ public class Class {
     }
 
     public boolean isImplements(Class other) {
-
         for (Class c = this; c != null; c = c.superClass) {
             for (Class clazz : c.interfaces) {
                 if (clazz == other || clazz.isSubInterfaceOf(other)) {
@@ -107,7 +152,6 @@ public class Class {
             }
         }
         return false;
-
     }
 
     public boolean isSubInterfaceOf(Class iface) {
@@ -119,10 +163,34 @@ public class Class {
         return false;
     }
 
+    /**
+     * 是否是数组
+     */
+    public boolean isArray() {
+        return name.getBytes()[0] == '[';
+    }
+
 
 
     public RunTimeConstantPool getConstantPool() {
         return runTimeConstantPool;
+    }
+
+    public Field getField(String name, String descriptor, boolean isStatic) {
+        for (Class c = this; c != null; c = c.superClass) {
+            for (Field field : c.fields) {
+                if (field.isStatic() == isStatic &&
+                        field.name.equals(name) &&
+                        field.descriptor.equals(descriptor)) {
+                    return field;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ClassLoader getLoader() {
+        return loader;
     }
 
     public String getName() {
@@ -166,6 +234,22 @@ public class Class {
 
     public Method getClinitMethod(){
         return getStaticMethod("<clinit>","()V");
+    }
+
+    /**
+     * 返回与类对应的数组类
+     */
+    public Class getArrayClass() {
+        String arrayClassName = ClassNameHelper.getArrayClassName(name);
+        return loader.loadClass(arrayClassName);
+    }
+
+    /**
+     * 返回数组类的元素类型
+     */
+    public Class getComponentClass() {
+        String componentClassName = ClassNameHelper.getComponentClassName(name);
+        return loader.loadClass(componentClassName);
     }
 
 }

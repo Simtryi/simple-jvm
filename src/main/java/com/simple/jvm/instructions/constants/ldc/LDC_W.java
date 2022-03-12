@@ -3,6 +3,8 @@ package com.simple.jvm.instructions.constants.ldc;
 import com.simple.jvm.instructions.base.impl.Index16Instruction;
 import com.simple.jvm.rtda.heap.constantpool.RunTimeConstantPool;
 import com.simple.jvm.rtda.heap.methodarea.Class;
+import com.simple.jvm.rtda.heap.methodarea.Object;
+import com.simple.jvm.rtda.heap.methodarea.StringPool;
 import com.simple.jvm.rtda.jvmstack.Frame;
 import com.simple.jvm.rtda.jvmstack.OperandStack;
 
@@ -16,7 +18,7 @@ public class LDC_W extends Index16Instruction {
         OperandStack stack = frame.getOperandStack();
         Class clazz = frame.getMethod().getClazz();
         RunTimeConstantPool runTimeConstantPool = frame.getMethod().getClazz().getConstantPool();
-        Object c = runTimeConstantPool.getConstants(idx);
+        java.lang.Object c = runTimeConstantPool.getConstants(idx);
 
         if (c instanceof Integer) {
             stack.pushInt((Integer) c);
@@ -26,6 +28,11 @@ public class LDC_W extends Index16Instruction {
         if (c instanceof Float) {
             stack.pushFloat((Float) c);
             return;
+        }
+
+        if (c instanceof String) {
+            Object internedStr = StringPool.jString(clazz.getLoader(), (String) c);
+            stack.pushRef(internedStr);
         }
 
         throw new RuntimeException("todo ldc");
